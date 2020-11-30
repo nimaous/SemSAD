@@ -9,7 +9,7 @@ SemSAD is a simple and generic framework for detecting examples that lie out-of-
 
 
 
-Download our trained models[here]()
+Download our trained models [here]()
 
 # Package dependencies
 listed [here](https://github.com/nimaous/SemSAD/blob/main/package_version.txt)
