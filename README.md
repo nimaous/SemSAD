@@ -12,4 +12,4 @@ SemSAD is a simple and generic framework for detecting examples that lie out-of-
 
 
 # Package dependencies
-listed []
+listed [here]https://github.com/nimaous/SemSAD/blob/main/package_version.txt
