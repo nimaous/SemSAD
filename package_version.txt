@@ -11,5 +11,5 @@ Required Python Packages
     
 
     
-Recommend Packages
+Recommended Packages
     tensorboard >= 2.0
