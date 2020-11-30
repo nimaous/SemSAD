@@ -1,4 +1,4 @@
-# SemSAD
+# UNSUPERVISED ANOMALY DETECTION FROM SEMAN- TIC SIMILARITY SCORES
 
 This repository contains PyTorch code for the [SemSAD paper]().
 
