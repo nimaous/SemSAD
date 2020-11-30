@@ -1,0 +1,37 @@
+Required Steps for Training:
+
+1- Training the encoder h   
+ (* for the training h, due to required large batch size 3 or 4 gpus are required) 
+ (* we saw variations in AUC score with different training of h. we trained h 3 times and report the evaluation with best h.
+  for each cifar10 and cifar100 please find the checkpoint for the best trained h under the trained_model directory as 
+         1- h_net_cifar10.pt    for cifar10
+         2- h_net_cifar100.pt    for cifar100
+
+   1.1 cifar10:  python train_encoder.py --dataset=cifar10 
+   1.2 cifar100: python train_encoder.py --dataset=cifar100  
+   
+notice that:
+  1- checkpoint is saved under ./checkpoint/{args.dataset}_{args.h_dim}_bs{args.bs}_hlr{args.h_lr}_temp{args.temprature}_h_nt.pt 
+  2- different hyperparamter rather than what mentioned in the paper can be passed by arguments 
+   
+   
+2- Training the discriminator s 
+ (* at least 2 gpu is required)   
+ (* it's neccesary to pass the already the path to trained h as an argument)
+ 
+  2.1 cifar10: python train_discriminator.py --dataset=cifar10  --h_net_path=<path to the trained h corresponding to the required dataset> 
+  
+  2.2 cifar100: python train_discriminator.py --dataset=cifar10  --h_net_path=<path to the trained h corresponding to the required dataset> 
+  
+  
+3- Evaluating the discriminator s
+    (* at least 2 gpu is required)
+    
+
+  3.1 cifar10 vs svhn:  python roc.py --dataset=cifar10 --ood_dataset=svhn  --h_net_path=<path to encoder h trained on cifar10> --s_net_path=<path to discriminator s trained on cifar10 >
+  
+  3.2 cifar100 vs svhn:  python roc.py --dataset=cifar100 --ood_dataset=svhn  --h_net_path=<path to encoder h trained on cifar100> --s_net_path=<path to discriminator s trained on cifar100 >
+  
+  3.3 cifar10 vs cifar100:  python roc.py --dataset=cifar10 --ood_dataset=cifar100  --h_net_path=<path to encoder h trained on cifar10> --s_net_path=<path to discriminator s trained on cifar10 >
+  
+  3.4 cifar100 vs cifar10:  python roc.py --dataset=cifar100 --ood_dataset=cifar10  --h_net_path=<path to encoder h trained on cifar100> --s_net_path=<path to discriminator s trained on cifar100 > 
