@@ -9,7 +9,7 @@ SemSAD is a simple and generic framework for detecting examples that lie out-of-
 
 
 
-
+Commands used to train the encoder and the discriminator in the paper [here](https://github.com/nimaous/SemSAD/blob/main/commands.txt)
 Download our trained models [here]()
 
 # Package dependencies
