@@ -14,6 +14,7 @@ SemSAD is a simple and generic framework for detecting examples that lie out-of-
 </figure>
 
 
+
 <figure>
     <img src='paper/Figure4.png' />
     <font size="2">
@@ -21,6 +22,7 @@ SemSAD is a simple and generic framework for detecting examples that lie out-of-
     </figcaption>
     </font>
 </figure>
+
 
 
 <figure>
