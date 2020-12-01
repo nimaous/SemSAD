@@ -17,15 +17,17 @@ SemSAD is a simple and generic framework for detecting examples that lie out-of-
 <figure>
     <img src='paper/Figure4.png' />
     <font size="2">
-    <figcaption> 
+    <figcaption> Figure 4: Distributions over the semantic similiarity score, s(x, x′ ), trained on CIFAR-100 pos/neg pairs (Ppos in blue; Pneg in red) as described in Section 4.1 and applied to semantic nearest- neighbour pairs from the test sets of SVHN and CIFAR-10 (out-distributions) in comparison to semantic nearest-neighbour pairs of the CIFAR-100 test/train sets (in-distributions).
     </figcaption>
     </font>
 </figure>
+
 
 <figure>
     <img src='paper/Table2.png' />
     <font size="2">
     <figcaption> 
+        Table 2: Average over AUROC values from 5 independent training runs for CIFAR-100/CIFAR10 (in/out distribution) for different setups. The lowest AUROC values among the 5 runs are shown in brackets. Reported AUROC values are lower bounds. We applied gaussian blurring on negative samples (blur), extreme transformations on positive samples (extreme transf.), and using correlated negative pairs Pneg (x, x′ ) derived from extreme transformations of the same image (correlated neg), and changed the fraction of semantically similar pairs (μ) per minibatch, the sampling range for γ, and the semantic neighbourhood size (N). AUROC is computed for CIFAR-100/10 test sets with 10k examples.
     </figcaption>
     </font>
 </figure>
