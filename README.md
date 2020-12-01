@@ -23,8 +23,6 @@ SemSAD is a simple and generic framework for detecting examples that lie out-of-
     </font>
 </figure>
 
-
-
 <figure>
     <img src='paper/Table2.png' />
     <font size="2">
@@ -33,8 +31,6 @@ SemSAD is a simple and generic framework for detecting examples that lie out-of-
     </figcaption>
     </font>
 </figure>
-
-
 
 Commands used to train the encoder and the discriminator in the paper [here](https://github.com/nimaous/SemSAD/blob/main/commands.txt)<br/>
 
