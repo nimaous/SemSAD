@@ -39,13 +39,5 @@ Download our trained models [here](https://www.dropbox.com/sh/rsjz3gqswk8xtqn/AA
 # Package dependencies
 listed [here](https://github.com/nimaous/SemSAD/blob/main/package_version.txt)
 
-# Citation
-@misc{rafiee2020unsupervised,
-      title={Unsupervised Anomaly Detection From Semantic Similarity Scores}, 
-      author={Nima Rafiee and Rahil Gholamipoor and Markus Kollmann},
-      year={2020},
-      eprint={2012.00461},
-      archivePrefix={arXiv},
-      primaryClass={cs.LG}
-}
+
 
