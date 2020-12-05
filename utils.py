@@ -58,6 +58,9 @@ def NCE_Loss(out, target, neg=None, self_neg=False,  similarity=None, temprature
 
 
 def count_parameters(model):
+    """
+     returns number of parameters of a given model
+    """
     return sum(p.numel() for p in model.parameters() if p.requires_grad)
 
 
