@@ -8,7 +8,7 @@ Required Python Packages
     argparse
     numpy
     tqdm (pip3.6 install tqdm)
-    re
+
 
     
 Recommend Packages
