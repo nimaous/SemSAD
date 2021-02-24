@@ -1,23 +1,7 @@
-Required Python Packages
-    Python 3.6 
-    pytorch >= 1.2 (pip3.6 install torch==1.2.0 torchvision==0.4.0  compatible with CUDA 10.0)
-    matplotlib (pip3.6 install matplotlib)
-    sklearn (pip3.6 install -U scikit-learn)    
-    random 
-    argparse
-    numpy
-    tqdm (pip3.6 install tqdm)
-    PIL (pip3.6 install pillow)
-    re
 
-    
-Recommend Packages
-    tensorboard >= 2.0
-    
-    
 For tiny_imagenet please at first run 
     - python tinyimagenet_preparation.py
-    after running the above command the data samples can be access under tiny-imagenet-200/  in the main directory
+    after running the above command the data samples can be accessed under tiny-imagenet-200/  in the main directory
     
 
 Required Steps for Training
