@@ -1,4 +1,3 @@
-
 For tiny_imagenet please at first run 
     - python tinyimagenet_preparation.py
     after running the above command the data samples can be accessed under tiny-imagenet-200/  in the main directory
