@@ -1,0 +1,10 @@
+embeddings {
+  tensor_name: "h1:00000"
+  metadata_path: "00000/h1/metadata.tsv"
+  sprite {
+    image_path: "00000/h1/sprite.png"
+    single_image_dim: 64
+    single_image_dim: 64
+  }
+  tensor_path: "00000/h1/tensors.tsv"
+}

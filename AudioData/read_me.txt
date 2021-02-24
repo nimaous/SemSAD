@@ -1,0 +1,32 @@
+Data preparation:
+
+1. Download LibriSpeech Data:
+    python get_librispeech_data.py --data_root=<where to put data> --data_set='TRAIN_CLEAN_100'
+    
+2. convert wav files to raw wave form and save as 'train-Librispeech.h5'
+    python wav2raw.py --train_root=<where train-clean-100 is located> --data_root=<where to put raw data>
+
+Required Steps for Training:
+
+1- Train the encoder h   
+   python train_encoder.py 
+ 
+notice that:
+  1- checkpoint is saved under ./checkpoint/h_tau_{args.tau}_hdim{args.hdim}.pt 
+  2- different hyperparamters than what mentioned in the paper can be passed by arguments 
+  
+2- Train the discriminator s  
+  python train_discriminator.py --h_net_path=<path to the trained h> --train_raw=<path to train-Librispeech.h5>
+
+notice that:
+  1- checkpoint is saved under ./checkpoint/s_tau_{args.tau}_hdim{args.hdim}_sdim{args.sdim}_{gamma}.pt
+  2- different hyperparamters than what mentioned in the paper can be passed by arguments 
+
+3- Evaluate the discriminator s
+  python roc.py --data_root=<path to train-Librispeech.h5>  --h_net_path=<path to encoder h> --s_net_path=<path to discriminator
+  s>
+
+
+Already trained encoder h and discriminator s can be found in './checkpoint':
+    h_tau_5_hdim256.pt
+    s_tau_5_hdim256_sdim64_gammaNeg1-10.pt
