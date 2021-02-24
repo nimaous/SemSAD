@@ -1,3 +1,4 @@
+# We are still updaing this repo 
 # UNSUPERVISED ANOMALY DETECTION FROM SEMANTIC SIMILARITY SCORES
 
 This repository contains PyTorch code for the [SemSAD paper](https://arxiv.org/abs/2012.00461).
