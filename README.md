@@ -31,5 +31,13 @@ Download our trained models for [ImageData](https://github.com/nimaous/SemSAD/tr
 ## Package dependencies
 listed [here](https://github.com/nimaous/SemSAD/blob/main/package_version.txt)
 
-
+## Citation
+@misc{rafiee2021unsupervised,
+      title={Unsupervised Anomaly Detection From Semantic Similarity Scores}, 
+      author={Nima Rafiee and Rahil Gholamipoor and Markus Kollmann},
+      year={2021},
+      eprint={2012.00461},
+      archivePrefix={arXiv},
+      primaryClass={cs.LG}
+}
 
