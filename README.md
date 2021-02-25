@@ -16,10 +16,10 @@ SemSAD is a simple and generic framework for detecting examples that lie out-of-
 <p align="center">
 <div class="row">
   <div class="column">
-    <img src="paper/Tabel4.png" width="400px"></img>
+    <img src="paper/Tabel4.png" width="300px"></img>
   </div>
   <div class="column">
-    <img src="paper/Tabel6.png" width="400px"></img>
+    <img src="paper/Tabel6.png" width="300px"></img>
   </div>
 </div>
 <p/>
