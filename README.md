@@ -13,6 +13,16 @@ SemSAD is a simple and generic framework for detecting examples that lie out-of-
 <img src="paper/Tabel2.png" width="500px"></img>
 <p/>
 
+
+<div class="row">
+  <div class="column">
+    <img src="Tabel2.jpg" alt="" style="width:100%">
+  </div>
+  <div class="column">
+    <img src="Tabel3.jpg" alt="" style="width:100%">
+  </div>
+</div>
+
 Commands used to train the encoder and the discriminator in the paper [here](https://github.com/nimaous/SemSAD/blob/main/commands.txt)<br/>
 
 Download our trained models for ImageData [here](https://github.com/nimaous/SemSAD/tree/main/ImageData/trained_models), TextData [here](https://github.com/nimaous/SemSAD/tree/main/TextData/trained_models) and AudioData [here](https://github.com/nimaous/SemSAD/tree/main/AudioData/trained_models)
