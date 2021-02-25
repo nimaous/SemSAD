@@ -1,7 +1,7 @@
 # We are still updating this repo 
 ## PyTorch-SemSAD
 
-PyTorch implementation of [UNSUPERVISED ANOMALY DETECTION FROM SEMANTIC SIMILARITY SCORES](https://arxiv.org/abs/2012.00461).
+PyTorch implementation of [Unsupervised Anomaly Detection From Semantic Similarity Scores](https://arxiv.org/abs/2012.00461).
 
 
 [SemSAD](https://arxiv.org/abs/2012.00461) is a simple and generic framework for detecting examples that lie out-of-distribution (OOD) for a given training set. Our approach is based on learning a semantic similarity measure to find for a given test example the semantically closest example in the training set and then using a discriminator to classify whether the two examples show sufficient semantic dissimilarity such that the test example can be rejected as OOD. 
