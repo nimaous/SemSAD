@@ -22,7 +22,7 @@ SemSAD is a simple and generic framework for detecting examples that lie out-of-
 <img src="paper/Tabel6.png" width="500px"></img>
 <p/>
 
-Commands used to train the encoder and the discriminator in the paper [here](https://github.com/nimaous/SemSAD/blob/main/commands.txt)<br/>
+Commands used to train the encoder and the discriminator in the paper [ImageData](https://github.com/nimaous/SemSAD/blob/main/ImageData/commands.txt), [TextData](https://github.com/nimaous/SemSAD/blob/main/TextData/commands.txt) and [AudioData](https://github.com/nimaous/SemSAD/tree/main/AudioData)<br/>
 
 Download our trained models for [ImageData](https://github.com/nimaous/SemSAD/tree/main/ImageData/trained_models), [TextData](https://github.com/nimaous/SemSAD/tree/main/TextData/trained_models) and [AudioData](https://github.com/nimaous/SemSAD/tree/main/AudioData/trained_models)
 
