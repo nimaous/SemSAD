@@ -42,7 +42,7 @@ if __name__=='__main__':
 
     """
     Tiny-ImageNet has 200 classes. Each image label has 500 training images(totally 100,000), 50 validation images(totally
-    10,000), and 50 test images (totally 10,000). The test images are unlabele.
+    10,000), and 50 test images (totally 10,000). The test images are unlabeled.
     Since test images are not labeled we use validation images for known/unknown splits.
     """
     
