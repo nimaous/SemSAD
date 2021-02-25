@@ -27,6 +27,6 @@ notice that:
   s>
 
 
-Already trained encoder h and discriminator s can be found in './checkpoint':
+Already trained encoder h and discriminator s can be found in './trained_models':
     h_tau_5_hdim256.pt
     s_tau_5_hdim256_sdim64_gammaNeg1-10.pt
