@@ -17,7 +17,7 @@ SemSAD is a simple and generic framework for detecting examples that lie out-of-
 
 Commands used to train the encoder and the discriminator in the paper [here](https://github.com/nimaous/SemSAD/blob/main/commands.txt)<br/>
 
-Download our trained models for ImageData[here](https://github.com/nimaous/SemSAD/tree/main/ImageData/trained_models), Textdata [here](https://github.com/nimaous/SemSAD/tree/main/TextData/trained_models)
+Download our trained models for ImageData [here](https://github.com/nimaous/SemSAD/tree/main/ImageData/trained_models), Textdata [here](https://github.com/nimaous/SemSAD/tree/main/TextData/trained_models)
 
 # Package dependencies
 listed [here](https://github.com/nimaous/SemSAD/blob/main/package_version.txt)
