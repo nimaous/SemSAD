@@ -9,14 +9,7 @@ SemSAD is a simple and generic framework for detecting examples that lie out-of-
 <img src="paper/Tabel1.png" width="500px"></img>
 <p/>
 
-<div class="row">
-  <div class="column">
-    <img src="paper/Tabel1.png" alt="" style="width:100%">
-  </div>
-  <div class="column">
-    <img src="paper/Tabel2.png" alt="" style="width:100%">
-  </div>
-</div>
+
 
 Commands used to train the encoder and the discriminator in the paper [here](https://github.com/nimaous/SemSAD/blob/main/commands.txt)<br/>
 
