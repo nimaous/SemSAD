@@ -29,9 +29,9 @@ Commands used to train the encoder and the discriminator in the paper : [ImageDa
 Download our trained models for [ImageData](https://github.com/nimaous/SemSAD/tree/main/ImageData/trained_models), [TextData](https://github.com/nimaous/SemSAD/tree/main/TextData/trained_models) and [AudioData](https://github.com/nimaous/SemSAD/tree/main/AudioData/trained_models)
 
 ## Requirements
-[ImageData](https://github.com/nimaous/SemSAD/blob/main/ImageData/requirements.txt)<br/>
-[TextData](https://github.com/nimaous/SemSAD/blob/main/TextData/requirements.txt)<br/>
-[AudioData](https://github.com/nimaous/SemSAD/blob/main/AudioData/requirements.txt)<br/>
+•[ImageData](https://github.com/nimaous/SemSAD/blob/main/ImageData/requirements.txt)<br/>
+•[TextData](https://github.com/nimaous/SemSAD/blob/main/TextData/requirements.txt)<br/>
+•[AudioData](https://github.com/nimaous/SemSAD/blob/main/AudioData/requirements.txt)<br/>
 
 ## Citation
 ```
