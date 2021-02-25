@@ -7,7 +7,7 @@ SemSAD is a simple and generic framework for detecting examples that lie out-of-
 
 
 <figure>
-    <img src='paper/Table1.png' />
+    <img src='paper/Tabel1.png' />
     <font size="0.5">
     <figcaption>Table 2: Out-of-distribution detection performance (% AUROC). Reported values for SemSAD are lower bounds.
     </figcaption>
