@@ -6,14 +6,22 @@ This repository contains PyTorch code for the [SemSAD paper](https://arxiv.org/a
 SemSAD is a simple and generic framework for detecting examples that lie out-of-distribution (OOD) for a given training set. Our approach is based on learning a semantic similarity measure to find for a given test example the semantically closest example in the training set and then using a discriminator to classify whether the two examples show sufficient semantic dissimilarity such that the test example can be rejected as OOD. 
 
 
-<figure>
-    <img src='paper/Table1.png' width="500" height="600" />
-    <font size="2">
-    <figcaption>Table 1: Out-of-distribution detection performance (% AUROC). Reported values for SemSAD are lower bounds.
-    </figcaption>
-    </font>
-</figure>
-
+<html>
+  <head>
+    <title>Center an Image using text align center</title>
+    <style>
+      .img-container {
+        text-align: center;
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <span class="img-container"> <!-- Inline parent element -->
+      <img src="paper/Table1.png" alt="">
+    </span>
+  </body>
+</html>
 
 <figure>
     <img src='paper/Table 2.png' />
