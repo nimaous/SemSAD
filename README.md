@@ -13,15 +13,16 @@ PyTorch implementation of [Unsupervised Anomaly Detection From Semantic Similari
 </p>
 
 <p align="center">
-<img src="paper/Tabel2.png" width="400px">
-<img src="paper/Tabel6.png" width="400px">
-</p>
+<img src="paper/Tabel2.png" width="400px"></img>
+<p/>
 
 <p align="center">
 <img src="paper/Tabel4.png" width="400px"></img>
 <p/>
 
-
+<p align="center">
+<img src="paper/Tabel6.png" width="400px"></img>
+<p/>
 
 
 Commands used to train the encoder and the discriminator in the paper for [ImageData](https://github.com/nimaous/SemSAD/blob/main/ImageData/commands.txt), [TextData](https://github.com/nimaous/SemSAD/blob/main/TextData/commands.txt) and [AudioData](https://github.com/nimaous/SemSAD/blob/main/AudioData/commands.txt)<br/>
