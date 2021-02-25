@@ -8,7 +8,7 @@ SemSAD is a simple and generic framework for detecting examples that lie out-of-
 
 <html>
   <head>
-    <title>Center an Image using text align center</title>
+    <title></title>
     <style>
       .img-container {
         text-align: center;
@@ -23,37 +23,7 @@ SemSAD is a simple and generic framework for detecting examples that lie out-of-
   </body>
 </html>
 
-<figure>
-    <img src='paper/Table 2.png' />
-    <font size="0.5">
-    <figcaption>Table 2: Out-of-distribution detection performance (% AUROC) for Tiny Imagenet dataset as OOD.
-    </figcaption>
-    </font>
-</figure>
 
-<figure>
-    <img src='paper/Table 4.png' />
-    <font size="0.5">
-    <figcaption>Table 4: Out-of-distribution detection performance (% AUROC). Reported values for SemSAD are lower bounds.
-    </figcaption>
-    </font>
-</figure>
-
-<figure>
-    <img src='paper/Table 6.png' />
-    <font size="0.5">
-    <figcaption>Table 6: Out-of-distribution detection performance (% AUROC). Reported values for SemSAD are lower bounds.
-    </figcaption>
-    </font>
-</figure>
-
-<figure>
-    <img src='paper/Figure4.png' />
-    <font size="2">
-    <figcaption>Figure 4: Distributions over the semantic similiarity score, s(x, x′), trained on CIFAR-100 pos/neg pairs (<a href="https://www.codecogs.com/eqnedit.php?latex=P_{pos}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?P_{pos}" title="P_{pos}" /></a> in blue; <a href="https://www.codecogs.com/eqnedit.php?latex=P_{neg}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?P_{neg}" title="P_{neg}" /></a> in red) as described in Section 4.1 and applied to semantic nearest- neighbour pairs from the test sets of SVHN and CIFAR-10 (out-distributions) in comparison to semantic nearest-neighbour pairs of the CIFAR-100 test/train sets (in-distributions).
-    </figcaption>
-    </font>
-</figure>
 
 
 
