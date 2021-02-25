@@ -1,4 +1,3 @@
-# We are still updating this repo 
 ## PyTorch-SemSAD
 
 PyTorch implementation of [Unsupervised Anomaly Detection From Semantic Similarity Scores](https://arxiv.org/abs/2012.00461).
