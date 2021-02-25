@@ -15,6 +15,29 @@ SemSAD is a simple and generic framework for detecting examples that lie out-of-
 </figure>
 
 
+<figure>
+    <img src='paper/Table2.png' />
+    <font size="2">
+    <figcaption>Table 1: Out-of-distribution detection performance (% AUROC). Reported values for SemSAD are lower bounds.
+    </figcaption>
+    </font>
+</figure>
+
+<figure>
+    <img src='paper/Table4.png' />
+    <font size="2">
+    <figcaption>Table 1: Out-of-distribution detection performance (% AUROC). Reported values for SemSAD are lower bounds.
+    </figcaption>
+    </font>
+</figure>
+
+<figure>
+    <img src='paper/Table6.png' />
+    <font size="2">
+    <figcaption>Table 1: Out-of-distribution detection performance (% AUROC). Reported values for SemSAD are lower bounds.
+    </figcaption>
+    </font>
+</figure>
 
 <figure>
     <img src='paper/Figure4.png' />
@@ -24,14 +47,7 @@ SemSAD is a simple and generic framework for detecting examples that lie out-of-
     </font>
 </figure>
 
-<figure>
-    <img src='paper/Table2.png' />
-    <font size="2">
-    <figcaption> 
-&nbspTable 2: Average over AUROC values from 5 independent training runs for CIFAR-100/CIFAR10 (in/out distribution) for different setups. The lowest AUROC values among the 5 runs are shown in brackets. Reported AUROC values are lower bounds. We applied gaussian blurring on negative samples (blur), extreme transformations on positive samples (extreme transf.), and using correlated negative pairs <a href="https://www.codecogs.com/eqnedit.php?latex=P_{neg}(x,x')" target="_blank"><img src="https://latex.codecogs.com/gif.latex?P_{neg}(x,x')" title="P_{neg}(x,x')" /></a> derived from extreme transformations of the same image (correlated neg), and changed the fraction of semantically similar pairs (μ) per minibatch, the sampling range for γ, and the semantic neighbourhood size (N). AUROC is computed for CIFAR-100/10 test sets with 10k examples.<br/>
-    </figcaption>
-    </font>
-</figure>
+
 
 Commands used to train the encoder and the discriminator in the paper [here](https://github.com/nimaous/SemSAD/blob/main/commands.txt)<br/>
 
