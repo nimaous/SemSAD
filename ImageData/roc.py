@@ -14,7 +14,7 @@
 # limitations under the License.
 
 import os
-os.environ["CUDA_VISIBLE_DEVICES"]= "0,1,2,3"
+os.environ["CUDA_VISIBLE_DEVICES"] = "0,1,2,3"
 import matplotlib.pyplot as plt
 import torch
 import argparse
@@ -27,8 +27,8 @@ from dataset_wrapper import DataSetWrapper
 from get_score import Get_Score
 from torchvision.models.resnet import resnet34, resnet18
 from change_resnet import modify_resnet_model
-h_dev = [0,1,2,3]
-s_dev = [1,2,3]
+h_dev = [0, 1, 2, 3]
+s_dev = [1, 2, 3]
 
 def load_models(args,):
     h_args = torch.load(args.h_net_path)['args']  
@@ -78,14 +78,14 @@ if __name__=='__main__':
     parser.add_argument('--test_size', default=1e4, type=int)
     parser.add_argument('--ood_size', default=1e4, type=int)
     parser.add_argument('--nw', type=int, default=6) 
-    parser.add_argument('--batch_size', default=5000, type=int, help='number of images in each mini-batch')
-    parser.add_argument('--dataset', type=str, default='cifar10', help='tiny_imagenet cifar100 or cifar10')
-    parser.add_argument('--ood_dataset', type=str, default='tiny_imagenet', help='tiny_imagenet cifar100 or cifar10 or svhn')
+    parser.add_argument('--batch_size', default=5000, type=int,)
+    parser.add_argument('--dataset', type=str, default='cifar10',)
+    parser.add_argument('--ood_dataset', type=str, default='cifar100',)
     parser.add_argument('--train_dir', type=str, default='.') 
     parser.add_argument('--test_dir', type=str, default='.')     
-    parser.add_argument('--ood_dir', type=str, default='tiny-imagenet-200/test/')
-    parser.add_argument('--h_net_path', type=str, default='checkpoint/h_net_cifar10.pt' )
-    parser.add_argument('--s_net_path', type=str, default='checkpoint/5th_s_cifar10_T8_sdim64_bs128_slr5e-05_resnet18ELU_div_32_grad_True_scheduler_4neighbours_gammaNeg1-10/s_net_500.pt' )
+    parser.add_argument('--ood_dir', type=str, default='')
+    parser.add_argument('--h_net_path', type=str, default='')
+    parser.add_argument('--s_net_path', type=str, default='' )
 
     args = parser.parse_args()
     args.s_dev = s_dev

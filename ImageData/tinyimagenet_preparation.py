@@ -12,7 +12,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 import torch
 import os
 import argparse
@@ -23,6 +22,7 @@ import shutil
 from io import BytesIO
 from urllib.request import urlopen
 from zipfile import ZipFile
+
 
 def get_annotations_map(val_annotaion_path):
     valAnnotationsFile = open(val_annotaion_path, 'r')
@@ -38,14 +38,14 @@ def download_and_unzip(zipurl, root_dir):
         with ZipFile(BytesIO(zipresp.read())) as zfile:
             zfile.extractall(root_dir)
 
+
 if __name__=='__main__':  
 
     """
     Tiny-ImageNet has 200 classes. Each image label has 500 training images(totally 100,000), 50 validation images(totally
     10,000), and 50 test images (totally 10,000). The test images are unlabeled.
     Since test images are not labeled we use validation images for known/unknown splits.
-    """
-    
+    """    
     parser = argparse.ArgumentParser()
     parser.add_argument('--root_dir', default='.', help='Where the data is located')
     args = parser.parse_args()
@@ -55,9 +55,12 @@ if __name__=='__main__':
         download_and_unzip('http://cs231n.stanford.edu/tiny-imagenet-200.zip', args.root_dir)
         print('done!')
         
-    train_path = os.path.join(os.path.join(args.root_dir,'tiny-imagenet-200'), 'train')
-    val_path = os.path.join(os.path.join(args.root_dir,'tiny-imagenet-200'), 'val')
-    test_path = os.path.join(os.path.join(args.root_dir,'tiny-imagenet-200'), 'test') 
+    train_path = os.path.join(os.path.join(args.root_dir,
+                                          'tiny-imagenet-200'), 'train')
+    val_path = os.path.join(os.path.join(args.root_dir,
+                                          'tiny-imagenet-200'), 'val')
+    test_path = os.path.join(os.path.join(args.root_dir,
+                                          'tiny-imagenet-200'), 'test') 
         
     print('categorize validation images ...')
     ### get  training annotations ###
@@ -69,11 +72,13 @@ if __name__=='__main__':
         j+=1
     
     ### manage directory to save categorized validation images ###
-    catval_path = os.path.join(os.path.join(args.root_dir,'tiny-imagenet-200'), 'categorized_val/') 
+    catval_path = os.path.join(os.path.join(args.root_dir,
+                                            'tiny-imagenet-200'), 'categorized_val/') 
     if not os.path.isdir(catval_path):
         os.mkdir(catval_path)
 
-    val_annotations_map = get_annotations_map(os.path.join(val_path, 'val_annotations.txt'))    
+    val_annotations_map = get_annotations_map(os.path.join(val_path, 
+                                            'val_annotations.txt'))    
     for sChild in os.listdir(os.path.join(val_path, 'images')):
         if val_annotations_map[sChild] in annotations.keys():
             dst = catval_path + val_annotations_map[sChild] 
@@ -93,9 +98,12 @@ if __name__=='__main__':
     random_unknown_classes = classes[:180]  
     
     ### manage directory to save splitted datasets ###    
-    known_train_path = os.path.join(os.path.join(args.root_dir,'tiny-imagenet-200'), 'trainset/')
-    eval_path = os.path.join(os.path.join(args.root_dir,'tiny-imagenet-200'), 'validation/')
-    ood_path = os.path.join(os.path.join(args.root_dir,'tiny-imagenet-200'), 'ood/')
+    known_train_path = os.path.join(os.path.join(args.root_dir,
+                                                 'tiny-imagenet-200'), 'trainset/')
+    eval_path = os.path.join(os.path.join(args.root_dir,
+                                                 'tiny-imagenet-200'), 'validation/')
+    ood_path = os.path.join(os.path.join(args.root_dir,
+                                                  'tiny-imagenet-200'), 'ood/')
 
     if not os.path.isdir(known_train_path):
         os.makedirs(known_train_path)

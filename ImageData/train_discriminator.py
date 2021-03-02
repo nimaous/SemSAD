@@ -21,15 +21,14 @@ from tqdm import tqdm
 import random
 import argparse
 import numpy as np
-vis = True
 try:
     from torch.utils.tensorboard import SummaryWriter
+    vis = True
 except:
     vis = False
 from torchvision.utils import make_grid
 from torchvision import models
 from torchvision.models.resnet import resnet34, resnet18
-
 from utils import  count_parameters
 from dataset_wrapper import DataSetWrapper
 from change_resnet import modify_resnet_model
@@ -42,26 +41,23 @@ tf.io.gfile = tb.compat.tensorflow_stub.io.gfile
 """
 
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
-
-
-
 norm2 = torch.nn.PairwiseDistance(p=2)
 log_sigmoid = nn.LogSigmoid()
-
-
-
 wt = 0.001
+
+
 def avg_loss(args, a_pos, a_neg, GN):                   
-    loss = torch.mean(-(log_sigmoid(a_pos) + GN*log_sigmoid(-a_neg)), dim=0) # average over samples
-    min_loss, min_dim = loss.topk(1, largest=False) # select smallest dim  
-    loss_avg = loss.mean() #average over dimensions
+    loss = torch.mean(-(log_sigmoid(a_pos) + GN*log_sigmoid(-a_neg)), dim=0)  # average over samples
+    min_loss, min_dim = loss.topk(1, largest=False)  # select smallest dim  
+    loss_avg = loss.mean()  #average over dimensions
     return loss_avg, min_dim
+
 
 def train(epoch, args, loader1, loader2, s_net,  s_net_opt):
     h_net.eval()
     s_net.train()     
     data_itr = iter(loader1)    
-    (img_r_neg , img_r_s , _, _), _ = next(data_itr)
+    (img_r_neg, img_r_s, _, _), _ = next(data_itr)
     img_r_neg, img_r_s = img_r_neg.to(device), img_r_s.to(device)    
     loader2 = tqdm(loader2)
     for itr, ((img_neg, img_t_s, img_t1, img_t2), _) in enumerate(loader2):  
@@ -73,21 +69,24 @@ def train(epoch, args, loader1, loader2, s_net,  s_net_opt):
         img_neg, img_t_s  = img_neg.to(device), img_t_s.to(device)
         img_t1, img_t2   = img_t1.to(device), img_t2.to(device)
         with torch.no_grad():            
-            h1 = h_net(img_t_s[0:args.bs//args.div])
+            h1 = h_net(img_t_s[0 : args.bs//args.div])
             h2 = h_net(img_r_s)
             h1_norm = h1/norm2(h1, torch.zeros_like(h1)).view(-1,1)
             h2_norm = h2/norm2(h2, torch.zeros_like(h2)).view(-1,1)
-            res_t = torch.matmul(h1_norm, h2_norm.transpose(1,0)) #[bs//div, comp_bs]
-            _, k_best_idx = res_t.topk(args.n_neighbor, dim=1) # select top k best 
-            rnd_neighbor_idx = torch.randint(0, args.n_neighbor, [args.bs//args.div,1]).to(device)#rnd idx for k best neighbors
-            selected_idx = k_best_idx.gather(1, rnd_neighbor_idx) #select a neighbor based on random index
-            similar_img = img_r_s[selected_idx].squeeze() #[bs//div]            
+            res_t = torch.matmul(h1_norm, h2_norm.transpose(1,0))  #[bs//div, comp_bs]
+            _, k_best_idx = res_t.topk(args.n_neighbor, dim=1)  #select top k best 
+            rnd_neighbor_idx = torch.randint(0, args.n_neighbor, 
+                                            [args.bs//args.div,1]).to(device)   #rnd idx for k best neighbors
+            selected_idx = k_best_idx.gather(1, rnd_neighbor_idx)   #select a neighbor based on random index
+            similar_img = img_r_s[selected_idx].squeeze()   #[bs//div]            
             rnd_idx1 = list(range(args.bs))
             random.shuffle(rnd_idx1)            
-            ref_img = torch.cat((img_t_s[0:args.bs//args.div], img_t1[args.bs//args.div:]), dim=0)[rnd_idx1]
-            pos_img = torch.cat((similar_img, img_t2[args.bs//args.div:]), dim=0)[rnd_idx1]             
+            ref_img = torch.cat((img_t_s[0 : args.bs//args.div], 
+                                 img_t1[args.bs//args.div:]), dim=0)[rnd_idx1]
+            pos_img = torch.cat((similar_img, 
+                                 img_t2[args.bs//args.div:]), dim=0)[rnd_idx1]             
         z_pos = s_net(torch.cat((ref_img, pos_img), dim=1))
-        z_neg = s_net(torch.cat((ref_img, img_r_neg[0:args.bs]), dim=1)) 
+        z_neg = s_net(torch.cat((ref_img, img_r_neg[0 : args.bs]), dim=1)) 
         a_pos = z_pos - np.log(GN)
         a_neg = z_neg - np.log(GN)         
         loss, best_dim = avg_loss(args, a_pos, a_neg, GN)
@@ -96,8 +95,9 @@ def train(epoch, args, loader1, loader2, s_net,  s_net_opt):
 #             for tag, parm in s_net.named_parameters():
 #                  writer.add_histogram(tag, parm.grad.data.cpu().numpy(), epoch)        
         s_net_opt.step()
-        if vis == True:
-            writer.add_scalar('LR',  s_net_opt.state_dict()['param_groups'][0]['lr'], global_step=epoch, walltime=wt)        
+        if vis:
+            writer.add_scalar('LR',  s_net_opt.state_dict()['param_groups'][0]['lr'], 
+                              global_step=epoch, walltime=wt)        
         rnd_idx2 = list(range(img_t1.size(0)))        
         random.shuffle(rnd_idx2)  
         img_r_neg = img_neg[rnd_idx2].clone()  
@@ -109,18 +109,23 @@ def train(epoch, args, loader1, loader2, s_net,  s_net_opt):
                 f' Epoch: {epoch + 1};  Loss: {loss.item()}' 
             )
         ) 
-    if vis == True:
+    if vis:
         with torch.no_grad():  
             if epoch % 100 == 1:
                 img_cat = torch.cat((ref_img[0:32],                               
                                      pos_img[0:32],
                                      img_r_neg[0:32] ),
                                        dim=0)
-                writer.add_image("Img1Img2ImgR_32",make_grid(img_cat).detach().cpu(), global_step=epoch, walltime=wt)         
-            writer.add_histogram('Positive Pairs', a_pos.cpu().numpy(), global_step=epoch, walltime=wt)
-            writer.add_histogram('Negative Pairs', a_neg.cpu().numpy(), global_step=epoch, walltime=wt)           
-            writer.add_scalar("Loss", loss.item(), global_step=epoch, walltime=wt)        
-            writer.add_scalar("Min Dim", best_dim.item(), global_step=epoch, walltime=wt)  
+                writer.add_image("Img1Img2ImgR_32",make_grid(img_cat).detach().cpu(), 
+                                 global_step=epoch, walltime=wt)         
+            writer.add_histogram('Positive Pairs', a_pos.cpu().numpy(), 
+                                 global_step=epoch, walltime=wt)
+            writer.add_histogram('Negative Pairs', a_neg.cpu().numpy(),
+                                 global_step=epoch, walltime=wt)           
+            writer.add_scalar("Loss", loss.item(),
+                                 global_step=epoch, walltime=wt)        
+            writer.add_scalar("Min Dim", best_dim.item(), 
+                                 global_step=epoch, walltime=wt)  
     return best_dim.item()
 
 
@@ -146,7 +151,9 @@ if __name__ == '__main__':
     assert args.h_net_path is not None
     h_net_ckpt = torch.load(args.h_net_path)
     h_args = h_net_ckpt['args']
-    h_net = resnet18(pretrained=False, progress=False, num_classes=h_args.h_dim)
+    h_net = resnet18(pretrained=False, 
+                     progress=False, 
+                    num_classes=h_args.h_dim)
     h_net = modify_resnet_model(h_net, args, mode='encoder')
     print("loading h net state dictionary")
     h_net.load_state_dict(h_net_ckpt['model'])         
@@ -157,10 +164,15 @@ if __name__ == '__main__':
                            
 
       
-    s_net = resnet34(pretrained=False, progress=True, num_classes=args.s_dim)    
+    s_net = resnet34(pretrained=False, 
+                     progress=True, 
+                     num_classes=args.s_dim)    
     s_net = modify_resnet_model(s_net, args, mode='discriminator')         
     print("Number of s net Paramters: ", count_parameters(s_net))
-    s_net_opt = optim.Adam(s_net.parameters(), lr=args.s_lr, weight_decay=args.weight_decay,  amsgrad=True)
+    s_net_opt = optim.Adam(s_net.parameters(), 
+                            lr=args.s_lr, 
+                            weight_decay=args.weight_decay,  
+                            amsgrad=True)
     s_net = nn.DataParallel(s_net)    
     s_net = s_net.to(device)     
        
@@ -168,7 +180,9 @@ if __name__ == '__main__':
     lambda1 = lambda epoch: 1 if epoch <200 else (0.2 if epoch <500 else 0.01 )
     scheduler = LambdaLR(s_net_opt, lr_lambda= lambda1)    
     
-    ds_warped = DataSetWrapper(args.dataset, args.ds_dir, args.comp_bs, None, args.nw, mode='discriminator')
+    ds_warped = DataSetWrapper(args.dataset, args.ds_dir, 
+                               args.comp_bs, None, args.nw,
+                               mode='discriminator')
     loader1 , loader2 = ds_warped.get_loaders()
         
 
@@ -180,19 +194,22 @@ if __name__ == '__main__':
     if not os.path.isdir('runs'):
         os.mkdir('runs')    
         
-    if vis == True:
+    if vis:
         writer = SummaryWriter(f'runs/cifar_{exp_num}')     
 
     for epoch in range(args.epoch+1):
-        best_dim = train(epoch, args, loader1, loader2, s_net, s_net_opt)   
+        best_dim = train(epoch, args, loader1, 
+                         loader2, s_net, s_net_opt)   
         scheduler.step()
         if epoch % 50 == 0:
             torch.save(
-                 {'model': s_net.module.state_dict(), 'args': args , 'best_dim': best_dim},
+                 {'model': s_net.module.state_dict(), 
+                  'args': args , 
+                  'best_dim': best_dim},
                 f'checkpoint/{exp_num}_s_net_{epoch}.pt',
             )
     
-    if vis == True:
+    if vis:
         writer.close()    
 
  

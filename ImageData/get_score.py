@@ -17,14 +17,14 @@ import os
 import matplotlib
 #matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-
 import random
 import torch
 import numpy as np
 from sklearn.metrics import roc_curve, auc
 from torchvision.utils import make_grid
 from PIL import Image, ImageFilter
-from torchvision import  transforms
+from torchvision import transforms
+
 
 class Get_Score(object):
     def __init__(self, models, loaders, args, div, train_hist=True): 
@@ -50,8 +50,8 @@ class Get_Score(object):
         size_ = 0
         for i, (x, _) in enumerate(data_loader):
             x_n, x_o, x_t1, x_t2 = x
-            h = self.h_net(x_o.to(f'cuda:{self.h_dev[0]}') )
-            h_normalized = h/self.norm(h, torch.zeros_like(h)).view(-1,1)
+            h = self.h_net(x_o.to(f'cuda:{self.h_dev[0]}'))
+            h_normalized = h/self.norm(h, torch.zeros_like(h)).view(-1, 1)
             h_lst.append(h_normalized)
             size_ += x_t1.size(0) 
             x_t1_lst.append(x_t1)
@@ -68,7 +68,7 @@ class Get_Score(object):
         x_o_total = torch.cat(x_o_lst, dim=0)
         x_n_total = torch.cat(x_n_lst, dim=0)
         h_total = torch.cat(h_lst, dim=0)
-        return  h_total, x_o_total, x_n_total, x_t1_total, x_t2_total
+        return h_total, x_o_total, x_n_total, x_t1_total, x_t2_total
         
     def score_function(self,):
         best_match_ind_train, best_match_ind, best_match_ood = self.find_best_match()
@@ -107,7 +107,7 @@ class Get_Score(object):
                                                                   self.loader)
         print(" training samples size", h.size())
         h_d, x_d = h[self.max_size2:], x[self.max_size2:]
-        print(" shrinked samples size" , h_d.size())
+        print(" shrinked samples size", h_d.size())
         self.h_ind_train, self.x_ind_train = h[0:self.max_size2], x[0:self.max_size2] 
         self.h_ind, self.x_ind, _, _, _ = self.matrix_preparation(self.max_size2,
                                                                   self.ind_loader)
@@ -131,7 +131,7 @@ class Get_Score(object):
     def _best_indices(self, inp1, inp2):
         print(inp1.size())
         print(inp2.size())
-        similarity = (torch.matmul(inp1, inp2.transpose(1,0)))
+        similarity = (torch.matmul(inp1, inp2.transpose(1, 0)))
         print(similarity.size())
         _, best_indices = similarity.topk(1, dim=1) 
         best_indices = best_indices.view(inp1.size(0))
@@ -141,27 +141,27 @@ class Get_Score(object):
         file = open(self.dir + name+"_auroc.txt","a+")    
         l1 = torch.zeros(s_1.size(0))
         l2 = torch.ones(s_2.size(0))
-        label = torch.cat((l1, l2),dim=0).view(-1,1).cpu()
+        label = torch.cat((l1, l2),dim=0).view(-1, 1).cpu()
         scores = torch.cat((s_1, s_2), dim=0).cpu()
-        FPR, TPR, _ = roc_curve(label, scores, pos_label = 0)
+        FPR, TPR, _ = roc_curve(label, scores, pos_label=0)
         file.write("AUC :{} \r\n".format(auc(FPR, TPR)))        
         file.close()  
                 
     def best_match_plot(self, x_ref, x_best, title):
-        plt.figure(figsize=(15,15))
-        plt.subplot(1,2,1)
-        plt.imshow(make_grid(x_ref[0:40].cpu()).permute(1,2,0))
+        plt.figure(figsize=(15, 15))
+        plt.subplot(1, 2, 1)
+        plt.imshow(make_grid(x_ref[0:40].cpu()).permute(1, 2, 0))
         plt.title('x')
         plt.axis('off')
-        plt.subplot(1,2,2)
-        plt.imshow(make_grid(x_best[0:40].cpu()).permute(1,2,0))
+        plt.subplot(1, 2, 2)
+        plt.imshow(make_grid(x_best[0:40].cpu()).permute(1, 2, 0))
         plt.title(f'best_neighbour')
         plt.axis('off')
         plt.savefig(self.dir + title + '.png') 
         
     def dist_plot(self,):
         plt.figure()
-        num_bins=100  
+        num_bins = 100  
         if self.train_hist:
             plt.figure()
             plt.hist(self.score_ind_train.cpu(), bins=num_bins, alpha=0.8)
