@@ -20,24 +20,22 @@ from torchvision import datasets
 from torch.utils.data import DataLoader, Dataset
 from PIL import Image, ImageFilter
 from torchvision.datasets import ImageFolder
-from torchvision import  transforms
+from torchvision import transforms
 import random
 
 
-
 class DataSetWrapper(object):
-
     def __init__(self, dataset_name, 
                  dataset_directory, 
                  batch_size1, 
-                 batch_size2 , 
+                 batch_size2, 
                  num_workers,
                  mode,
                  train = True,
                  type = 'trainset',                 
                  shuffle= True,
-                 ti_for_ci = False,
-                ):   
+                 ti_for_ci = False,):  
+
         self.type = type
         self.ti_for_ci = ti_for_ci
         self.ds_name = dataset_name
@@ -53,7 +51,8 @@ class DataSetWrapper(object):
         self.shuffle = shuffle
 
         
-    def get_loaders(self):         
+    def get_loaders(self):      
+
         t_neg , t_org, t_pos = self._get_transformations()
 
         if self.ds_name == 'svhn':
@@ -101,6 +100,7 @@ class DataSetWrapper(object):
 
     
     def _get_transformations(self): 
+
         if self.ds_name in ['cifar10', 'cifar100', 'svhn']:
             size = 32
             s = 0.5
@@ -128,20 +128,20 @@ class DataSetWrapper(object):
                 transforms.ToTensor(),        
             ])   
             t_pos = transforms.Compose([
-                transforms.RandomResizedCrop(size, scale=(0.4,1)),
+                transforms.RandomResizedCrop(size, scale=(0.4, 1)),
                 shared_T,
                 transforms.ToTensor(),
             ])
 
             t_org =  transforms.Compose([
-                transforms.RandomResizedCrop(size, scale=(1,1)),
+                transforms.RandomResizedCrop(size, scale=(1, 1)),
                 transforms.ToTensor(),
             ])        
             return t_neg, t_org, t_pos
         
         if self.mode == 'encoder':
             t_org =  transforms.Compose([
-                transforms.RandomResizedCrop(size, scale=(1,1)),
+                transforms.RandomResizedCrop(size, scale=(1, 1)),
                 transforms.ToTensor(),
             ])
 
@@ -186,15 +186,17 @@ class GaussianBlur(object):
         return x
     
 class SampleTransform(object):
-    def __init__(self, t_neg, t_org, t_pos , mode=None):            
+
+
+    def __init__(self, t_neg, t_org, t_pos, mode=None):            
         self.t_neg = t_neg
         self.t_pos = t_pos
         self.t_org = t_org
         self.mode = mode 
+
     def __call__(self, sample):            
         if self.mode in ['discriminator', 'auroc']:
             return self.t_neg(sample), self.t_org(sample), 
                    self.t_pos(sample), self.t_pos(sample)
         if self.mode == 'encoder':
-            return self.t_org(sample), self.t_pos(sample), 
-                   self.t_pos(sample)
+            return self.t_org(sample), self.t_pos(sample), self.t_pos(sample)
