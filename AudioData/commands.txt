@@ -23,10 +23,4 @@ notice that:
   2- different hyperparamters than what mentioned in the paper can be passed by arguments 
 
 3- Evaluate the discriminator s
-  python roc.py --data_root=<path to train-Librispeech.h5>  --h_net_path=<path to encoder h> --s_net_path=<path to discriminator
-  s>
-
-
-Already trained encoder h and discriminator s can be found in './checkpoint':
-    h_tau_5_hdim256.pt
-    s_tau_5_hdim256_sdim64_gammaNeg1-10.pt
+  python roc.py --data_root=<path to train-Librispeech.h5>  --h_net_path=<path to encoder h> --s_net_path=<path to discriminator s>

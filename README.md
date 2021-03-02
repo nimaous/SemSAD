@@ -1,26 +1,46 @@
-# We are still updating this repo 
-## UNSUPERVISED ANOMALY DETECTION FROM SEMANTIC SIMILARITY SCORES
+## PyTorch-SemSAD
 
-This repository contains PyTorch code for the [SemSAD paper](https://arxiv.org/abs/2012.00461).
-
-SemSAD is a simple and generic framework for detecting examples that lie out-of-distribution (OOD) for a given training set. Our approach is based on learning a semantic similarity measure to find for a given test example the semantically closest example in the training set and then using a discriminator to classify whether the two examples show sufficient semantic dissimilarity such that the test example can be rejected as OOD. 
+PyTorch implementation of [Unsupervised Anomaly Detection From Semantic Similarity Scores](https://arxiv.org/abs/2012.00461).
 
 
-<figure>
-    <img src='paper/Tabel1.png' width="500" height="400"/>
-    <font size="0.5">
-    <figcaption>
-    </figcaption>
-    </font>
-</figure>
+[SemSAD](https://arxiv.org/abs/2012.00461) is a simple and generic framework for detecting examples that lie out-of-distribution (OOD) for a given training set. Our approach is based on learning a semantic similarity measure to find for a given test example the semantically closest example in the training set and then using a discriminator to classify whether the two examples show sufficient semantic dissimilarity such that the test example can be rejected as OOD. 
 
 
-Commands used to train the encoder and the discriminator in the paper [here](https://github.com/nimaous/SemSAD/blob/main/commands.txt)<br/>
+<p align="center">
+<img src="paper/Tabel1.png" width="400px">
+<img src="paper/Figure4.png" width="400px">
+</p>
 
-Download our trained models for ImageData [here](https://github.com/nimaous/SemSAD/tree/main/ImageData/trained_models), TextData [here](https://github.com/nimaous/SemSAD/tree/main/TextData/trained_models) and AudioData [here]()
+<p align="center">
+<img src="paper/Tabel2.png" width="400px"></img>
+<p/>
 
-# Package dependencies
-listed [here](https://github.com/nimaous/SemSAD/blob/main/package_version.txt)
+<p align="center">
+<img src="paper/Tabel4.png" width="400px"></img>
+<p/>
+
+<p align="center">
+<img src="paper/Tabel6.png" width="400px"></img>
+<p/>
 
 
+Commands used to train the encoder and the discriminator in the paper : [ImageData](https://github.com/nimaous/SemSAD/blob/main/ImageData/commands.txt), [TextData](https://github.com/nimaous/SemSAD/blob/main/TextData/commands.txt) and [AudioData](https://github.com/nimaous/SemSAD/blob/main/AudioData/commands.txt)<br/>
 
+Download our trained models for [ImageData](https://github.com/nimaous/SemSAD/tree/main/ImageData/trained_models), [TextData](https://github.com/nimaous/SemSAD/tree/main/TextData/trained_models) and [AudioData](https://github.com/nimaous/SemSAD/tree/main/AudioData/trained_models)
+
+## Requirements
+• [ImageData](https://github.com/nimaous/SemSAD/blob/main/ImageData/requirements.txt)<br/>
+• [TextData](https://github.com/nimaous/SemSAD/blob/main/TextData/requirements.txt)<br/>
+• [AudioData](https://github.com/nimaous/SemSAD/blob/main/AudioData/requirements.txt)<br/>
+
+## Citation
+```
+@misc{rafiee2021unsupervised,
+      title={Unsupervised Anomaly Detection From Semantic Similarity Scores}, 
+      author={Nima Rafiee and Rahil Gholamipoor and Markus Kollmann},
+      year={2021},
+      eprint={2012.00461},
+      archivePrefix={arXiv},
+      primaryClass={cs.LG}
+}
+```

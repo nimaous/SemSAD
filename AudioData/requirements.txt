@@ -1,0 +1,17 @@
+Required Python Packages
+    Python 3.6 
+    pytorch >= 1.2 (pip3.6 install torch==1.2.0 torchvision==0.4.0  compatible with CUDA 10.0)
+    matplotlib (pip3.6 install matplotlib)
+    sklearn (pip3.6 install -U scikit-learn)    
+    random 
+    argparse
+    numpy
+    scipy
+    h5py 
+    tqdm (pip3.6 install tqdm)
+    
+    
+
+    
+Recommended Packages
+    tensorboard >= 2.0
