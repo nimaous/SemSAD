@@ -22,8 +22,7 @@ from PIL import Image, ImageFilter
 from torchvision.datasets import ImageFolder
 from torchvision import  transforms
 import random
-import h5py
-import io
+
 
 
 class DataSetWrapper(object):
@@ -52,26 +51,30 @@ class DataSetWrapper(object):
         self.mode = mode
         self.train = train
         self.shuffle = shuffle
-        #pin_memeory = True if self.ds_name == 'tiny_imagenet
 
         
     def get_loaders(self):         
         t_neg , t_org, t_pos = self._get_transformations()
 
         if self.ds_name == 'svhn':
-            ds1 = datasets.SVHN(root=self.ds_dir, split='test' if not self.train else 'train' ,
-                               transform = SampleTransform(t_neg, t_org, t_pos , mode=self.mode), download=True)        
+            ds1 = datasets.SVHN(root=self.ds_dir, split='test' if not self.train else 'train',
+                                transform = SampleTransform(t_neg, t_org, t_pos, mode=self.mode), 
+                                download=True)        
         
         if self.ds_name == 'cifar10':
             ds1 = datasets.CIFAR10(root=self.ds_dir, train=self.train, 
-                               transform = SampleTransform(t_neg, t_org, t_pos , mode=self.mode), download=True)  
+                                   transform = SampleTransform(t_neg, t_org, t_pos, mode=self.mode), 
+                                   download=True)  
             
         if self.ds_name == 'cifar100':
             ds1 = datasets.CIFAR100(root=self.ds_dir, train=self.train,
-                                    transform = SampleTransform(t_neg, t_org, t_pos , mode=self.mode), download=True)
+                                    transform = SampleTransform(t_neg, t_org, t_pos, mode=self.mode), 
+                                    download=True)
             
         if self.ds_name == 'tiny_imagenet':   
-            ds1 = ImageFolder(self.ds_dir, transform=SampleTransform(t_neg, t_org, t_pos, mode=self.mode))
+            ds1 = ImageFolder(self.ds_dir, 
+                              transform=SampleTransform(t_neg, t_org, 
+                                                        t_pos, mode=self.mode))
             
         print(f"Dataset size is: {len(ds1)} ")        
         if self.mode == 'auroc':            
@@ -145,7 +148,7 @@ class DataSetWrapper(object):
             colorJitter = transforms.ColorJitter(
                 0.8 * s, 0.8 * s, 0.8 * s, 0.2 * s
             ) 
-            if self.ds_name in ['cifar10', 'cifar100', 'svhn','tiny_imagenet']:                        
+            if self.ds_name in ['cifar10', 'cifar100', 'svhn', 'tiny_imagenet']:                        
                 t_1 = transforms.Compose([
                     transforms.RandomResizedCrop(size),
                     transforms.RandomHorizontalFlip(p=0.5),
@@ -190,6 +193,8 @@ class SampleTransform(object):
         self.mode = mode 
     def __call__(self, sample):            
         if self.mode in ['discriminator', 'auroc']:
-            return self.t_neg(sample), self.t_org(sample), self.t_pos(sample), self.t_pos(sample)
+            return self.t_neg(sample), self.t_org(sample), 
+                   self.t_pos(sample), self.t_pos(sample)
         if self.mode == 'encoder':
-            return self.t_org(sample), self.t_pos(sample), self.t_pos(sample)
+            return self.t_org(sample), self.t_pos(sample), 
+                   self.t_pos(sample)
