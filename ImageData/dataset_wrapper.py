@@ -196,7 +196,6 @@ class SampleTransform(object):
 
     def __call__(self, sample):            
         if self.mode in ['discriminator', 'auroc']:
-            return self.t_neg(sample), self.t_org(sample), 
-                   self.t_pos(sample), self.t_pos(sample)
+            return self.t_neg(sample), self.t_org(sample), self.t_pos(sample), self.t_pos(sample)
         if self.mode == 'encoder':
             return self.t_org(sample), self.t_pos(sample), self.t_pos(sample)
