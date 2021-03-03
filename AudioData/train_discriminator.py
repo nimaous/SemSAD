@@ -51,9 +51,9 @@ def get_features(args, h_net, x):
         t_1 = torch.randint(int(128-args.tau), (1,)).long() 
         t_2 = t_1 + args.tau
         z = h_net.module.encoder(x)
-        z = z.transpose(1,2)       
-        ref = z[:,t_1,:].view(batch,args.hdim)
-        pos = z[:,t_2,:].view(batch,args.hdim)
+        z = z.transpose(1, 2)       
+        ref = z[:, t_1, :].view(batch, args.hdim)
+        pos = z[:, t_2, :].view(batch, args.hdim)
     return ref.unsqueeze(1), pos.unsqueeze(1)
 
 def train(epoch, args, train_loader1, train_loader2, h_net, s_net, s_net_opt):
@@ -151,9 +151,3 @@ if __name__ == '__main__':
     
     if vis == True:
         writer.close()
-
-
-
-
-
-
