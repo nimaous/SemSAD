@@ -38,9 +38,9 @@ except:
     
 
 wt = 0.001
-bert_dev =  [0,1,2,3]
-s_dev= [2,3]
-h_dev= [1,2,3]
+bert_dev =  [0, 1, 2, 3]
+s_dev= [2, 3]
+h_dev= [1, 2, 3]
 norm = torch.nn.PairwiseDistance(p=2) 
 uda_w_tokenizer = FullTokenizer(vocab_file=None)
 
@@ -53,8 +53,8 @@ def get_bert_output(x):
             out = bert(**x_dict)
             hs = out[2] #[13, bs, L, 768]
             hs = hs[-1] + hs[-2] + hs[-3] + hs[-4]
-            tokens_sum = hs[:,1:].sum(dim=1).unsqueeze(1) #[bs, 1 , 768]
-            cls = hs[:,0].unsqueeze(1) #[bs, 1, 768]            
+            tokens_sum = hs[:, 1:].sum(dim=1).unsqueeze(1) #[bs, 1 , 768]
+            cls = hs[:, 0].unsqueeze(1) #[bs, 1, 768]            
             return torch.cat((tokens_sum, cls), dim=1)#[bs,2,768]  
 
 def generate_normalized_h(loader, bert, h_net, h_args, data_size):    
@@ -62,10 +62,10 @@ def generate_normalized_h(loader, bert, h_net, h_args, data_size):
         norm_h = [] 
         x_lst = []
         label_lst = []
-        for i , (x ,_ , _ , _, _, label) in enumerate(loader):
+        for i , (x, _, _, _, _, label) in enumerate(loader):
             x_embedd = get_bert_output(x)   
             h = h_net(x_embedd.to(f'cuda:{h_dev[0]}') ).view(-1, h_args.h_dim)
-            norm_h.append(h/norm(h, torch.zeros_like(h)).view(-1,1))
+            norm_h.append(h/norm(h, torch.zeros_like(h)).view(-1, 1))
             x_lst.extend(list(x))            
             label_lst.append(label)
         return torch.cat(norm_h, dim=0), x_lst, torch.cat(label_lst, dim=0)
@@ -112,13 +112,13 @@ if __name__ == "__main__":
     s_args = s_net_ckpt['args']     
     
     
-    h_net = ConvEncoder(2 , 768 , h_args.h_dim, h_net=True)
+    h_net = ConvEncoder(2, 768 , h_args.h_dim, h_net=True)
     h_net.load_state_dict(h_net_ckpt['model'])
     h_net= nn.DataParallel(h_net, device_ids=h_dev)            
     h_net = h_net.to(f'cuda:{h_dev[0]}') 
          
 
-    s_net = ConvEncoder(4 , 768 , s_args.s_dim)
+    s_net = ConvEncoder(4, 768 , s_args.s_dim)
     s_net.load_state_dict(s_net_ckpt['model'])
     s_net = nn.DataParallel(s_net, device_ids=s_dev)    
     s_net = s_net.to(f'cuda:{s_dev[0]}') 
@@ -134,74 +134,85 @@ if __name__ == "__main__":
     tp = "tokens_train" if os.path.isfile("tokens_train") else None
     dsp = "tf-idf-dict_train" if os.path.isfile("tf-idf-dict_train") else None
     train_ds = TextDataset(dataset_name=args.dataset_name,  
-                             sufix_name = "train", 
-                             tokens_path = tp,
-                             data_stats_path = dsp,
-                               tf_idf_pr = 0.0,
-                               th_sus_prt = 0.0, 
-                               rnd_tf_idf_pr = 0.0,
-                               rnd_th_sus_prt = 0.0,                            
+                             sufix_name="train", 
+                             tokens_path=tp,
+                             data_stats_path=dsp,
+                             tf_idf_pr=0.0,
+                             th_sus_prt=0.0, 
+                             rnd_tf_idf_pr=0.0,
+                             rnd_th_sus_prt=0.0,                            
                              out_cls=[0])
-    train_loader = DataLoader(train_ds, batch_size=args.bs,
-                              shuffle=False, num_workers=24, 
+    train_loader = DataLoader(train_ds, 
+                              batch_size=args.bs,
+                              shuffle=False, 
+                              num_workers=24, 
                               drop_last=False)
     
     test_tp = "tokens_test" if os.path.isfile("tokens_test") else None
     test_dsp = "tf-idf-dict_test" if os.path.isfile("tf-idf-dict_test") else None    
     test_ds = TextDataset(dataset_name=args.dataset_name, 
-                             train = False,
-                             sufix_name = "test", 
-                             tokens_path = test_tp,
-                             data_stats_path = test_dsp,                          
-                               tf_idf_pr = 0.0,
-                               th_sus_prt = 0.0, 
-                               rnd_tf_idf_pr = 0.0,
-                               rnd_th_sus_prt = 0.0,                           
-                             out_cls=[0])
-    test_loader = DataLoader(test_ds, batch_size=args.bs,
-                             shuffle=False, num_workers=24,
+                            train=False,
+                            sufix_name="test", 
+                            tokens_path=test_tp,
+                            data_stats_path=test_dsp,                          
+                            tf_idf_pr=0.0,
+                            th_sus_prt=0.0, 
+                            rnd_tf_idf_pr=0.0,
+                            rnd_th_sus_prt=0.0,                           
+                            out_cls=[0])
+    test_loader = DataLoader(test_ds, 
+                             batch_size=args.bs,
+                             shuffle=False, 
+                             num_workers=24,
                              drop_last=False)   
     
     ood_tp = "tokens_ood" if os.path.isfile("tokens_ood") else None
     ood_dsp = "tf-idf-dict_ood" if os.path.isfile("tf-idf-dict_ood") else None      
     ood_ds = TextDataset(dataset_name=args.dataset_name,
-                             train = False,
-                             sufix_name = "ood", 
-                             tokens_path = ood_tp,
-                             data_stats_path = ood_dsp,                            
-                               tf_idf_pr = 0.0,
-                               th_sus_prt = 0.0, 
-                               rnd_tf_idf_pr = 0.0,
-                               rnd_th_sus_prt = 0.0,                          
-                             out_cls=[1,2,3])
-    ood_loader = DataLoader(ood_ds, batch_size=args.bs,
-                            shuffle=False, num_workers=24, 
+                            train=False,
+                            sufix_name="ood", 
+                            tokens_path=ood_tp,
+                            data_stats_path=ood_dsp,                            
+                            tf_idf_pr=0.0,
+                            th_sus_prt=0.0, 
+                            rnd_tf_idf_pr=0.0,
+                            rnd_th_sus_prt=0.0,                          
+                            out_cls=[1, 2, 3])
+    ood_loader = DataLoader(ood_ds, 
+                            batch_size=args.bs,
+                            shuffle=False, 
+                            num_workers=24, 
                             drop_last=False)    
     
     train_aug = TextDataset(dataset_name=args.dataset_name,  
-                             sufix_name = "train", 
-                             tokens_path = tp,
-                             data_stats_path = dsp,
-                               tf_idf_pr = s_args.tf_idf_pr,
-                               th_sus_prt = s_args.th_sus_prt, 
-                               rnd_tf_idf_pr = s_args.rnd_tf_idf_pr,
-                               rnd_th_sus_prt = s_args.rnd_th_sus_prt,                             
-                               sync_aug = s_args.sync_aug,
-                             out_cls=[0]) 
+                                sufix_name="train", 
+                                tokens_path=tp,
+                                data_stats_path=dsp,
+                                tf_idf_pr=s_args.tf_idf_pr,
+                                th_sus_prt=s_args.th_sus_prt, 
+                                rnd_tf_idf_pr=s_args.rnd_tf_idf_pr,
+                                rnd_th_sus_prt=s_args.rnd_th_sus_prt,                             
+                                sync_aug=s_args.sync_aug,
+                                out_cls=[0]) 
    
     
-    train_aug_loader = DataLoader(train_aug, batch_size=len(test_ds),
-                                  shuffle=False, num_workers=24,
+    train_aug_loader = DataLoader(train_aug, 
+                                  batch_size=len(test_ds),
+                                  shuffle=False, 
+                                  num_workers=24,
                                   drop_last=False)     
 
 
 
      
-    train_h, train_x, train_l = generate_normalized_h(train_loader, bert, h_net, h_args, len(train_ds))
+    train_h, train_x, train_l = generate_normalized_h(train_loader, bert, 
+                                                      h_net, h_args, len(train_ds))
     print("train normalization done.....")
-    test_h, test_x, test_l = generate_normalized_h(test_loader, bert, h_net, h_args, len(test_ds))
+    test_h, test_x, test_l = generate_normalized_h(test_loader, bert, 
+                                                   h_net, h_args, len(test_ds))
     print("test normalization done.....")    
-    ood_h, ood_x, ood_l = generate_normalized_h(ood_loader, bert, h_net, h_args, len(ood_ds))
+    ood_h, ood_x, ood_l = generate_normalized_h(ood_loader, bert, 
+                                                h_net, h_args, len(ood_ds))
     print("ood normalization done.....")    
     
     print(len(train_x))
@@ -211,12 +222,13 @@ if __name__ == "__main__":
     print(test_h.size())
     print(ood_h.size())
     
-    best_match_test, best_match_test_l = find_best_match(train_x , train_l,
+    best_match_test, best_match_test_l = find_best_match(train_x, train_l,
                                                          test_h, train_h)
-    best_match_ood, best_match_ood_l  = find_best_match(train_x , train_l, 
+    best_match_ood, best_match_ood_l  = find_best_match(train_x, train_l, 
                                                         ood_h, train_h)  
     best_match_train, best_match_train_l = find_best_match(train_x[len(test_ds):], 
-                                                           train_l[len(test_ds):] ,train_h[0:len(test_ds)], 
+                                                           train_l[len(test_ds):],
+                                                           train_h[0:len(test_ds)], 
                                                            train_h[len(test_ds):])     
     
 
@@ -225,20 +237,24 @@ if __name__ == "__main__":
         os.mkdir(exp_name)
 
     itr = iter(train_aug_loader)
-    x_ref, x_pos, x_neg , _, _, l_pos = next(itr)
+    x_ref, x_pos, x_neg, _, _, l_pos = next(itr)
 
     
     
     z_pos = calculate_score(x_ref, l_pos, x_pos, 
-                              s_args, exp_name, "z_pos", save=False)
+                              s_args, exp_name,
+                              "z_pos", save=False)
     z_neg = calculate_score(x_ref, l_pos, x_neg, 
-                               s_args, exp_name, "z_neg", save=False)    
+                               s_args, exp_name, 
+                               "z_neg", save=False)    
     z_test = calculate_score(best_match_test, 
                                 best_match_test_l,
-                                 test_x, s_args, exp_name, "z_test", save=True)
+                                test_x, s_args, exp_name, 
+                                "z_test", save=True)
     z_ood = calculate_score(best_match_ood,  
                               best_match_ood_l,
-                              ood_x, s_args, exp_name, "z_ood", save=True)
+                              ood_x, s_args, exp_name, 
+                              "z_ood", save=True)
 
     calculate_aucroc(z_test, z_ood, exp_name+"/", "test-ood")
     dist_plot(exp_name+"/", [z_test, z_pos, z_neg, z_ood],
