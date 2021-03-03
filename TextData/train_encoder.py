@@ -13,7 +13,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 import wget
 import os
 os.environ["CUDA_VISIBLE_DEVICES"]= "0,1,2,3"
@@ -40,9 +39,6 @@ import tensorflow as tf
 import tensorboard as tb
 tf.io.gfile = tb.compat.tensorflow_stub.io.gfile
 """
-
-
-
 wt = 0.001
 bert_dev =  [0, 1, 2, 3]
 h_dev= [1, 2, 3]
@@ -96,8 +92,7 @@ def train(epoch, loader, h_net_opt):
                                      metadata=f_meta, global_step=epoch)         
                 
     
-if __name__ == "__main__":
-    
+if __name__ == "__main__":    
     parser = argparse.ArgumentParser()
     parser.add_argument('--dataset_name', type=str, default='AG_NEWS')
     parser.add_argument('--bs', type=int, default=512)
@@ -156,5 +151,3 @@ if __name__ == "__main__":
             f'checkpoint/{exp_name}_h_net.pt',
         )       
     writer.close()
-    
-    
