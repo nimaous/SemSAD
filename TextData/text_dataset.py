@@ -76,13 +76,12 @@ def _csv_iterator(data_path, yield_cls=False):
         for row in reader:
             paragraph = ' '.join(row[1:])
             tokens = uda_w_tokenizer.tokenize_to_word(paragraph)
-            #tokens = torch_tokenizer(tokens)
             if yield_cls:
                 yield int(row[0]) - 1, tokens
             else:
                 yield tokens
 
-
+                
 def _create_data_from_iterator(vocab, iterator, out_cls): # vocab can be removed 
     data = []
     labels = []
@@ -97,24 +96,23 @@ def _create_data_from_iterator(vocab, iterator, out_cls): # vocab can be removed
     return data, set(labels)
 
 
-
 class TextDataset(Dataset):
     
     def __init__(self, dataset_name, 
                                root='.',
                                vocab= None,
                                train=True, 
-                               tf_idf_pr = 0.3,
-                               rnd_tf_idf_pr = 0.0, 
-                               rnd_th_sus_prt = 0.0,
-                               th_sus_prt = 0.5, 
-                               data_stats_path = None, #'tf-idf-dict',
-                               sufix_name= "",
-                               tokens_path = None, #'train_tokens', 
+                               tf_idf_pr=0.3,
+                               rnd_tf_idf_pr=0.0, 
+                               rnd_th_sus_prt=0.0,
+                               th_sus_prt=0.5, 
+                               data_stats_path=None, 
+                               sufix_name="",
+                               tokens_path=None, 
                                out_cls=None,
                                sync_aug=False):
         super(TextDataset ,self).__init__()
-        assert isinstance(out_cls, list)==True
+        assert isinstance(out_cls, list) == True
         dataset_tar = download_from_url(URLS[dataset_name], root=root)
         extracted_files = extract_archive(dataset_tar)
         self.th_sus_prt = th_sus_prt
@@ -124,9 +122,7 @@ class TextDataset(Dataset):
             if fname.endswith('train.csv'):
                 train_csv_path = fname
             if fname.endswith('test.csv'):
-                test_csv_path = fname
-
-    
+                test_csv_path = fname    
         if tokens_path:
             print("loading the tokens")
             with open(tokens_path, 'rb') as tokens_f:
@@ -134,18 +130,19 @@ class TextDataset(Dataset):
         if train :   
             if not tokens_path:
                 logging.info('Creating training data')            
-                self.data, self.labels = _create_data_from_iterator(vocab, _csv_iterator(train_csv_path,
-                                                                                         yield_cls=True, 
-                                                                                             ),out_cls=out_cls)
+                self.data, self.labels = _create_data_from_iterator(vocab, 
+                                                                    _csv_iterator(train_csv_path,
+                                                                                  yield_cls=True),
+                                                                    out_cls=out_cls)
                 with open(f'tokens_{sufix_name}' , 'wb') as tokens_f:                
                     pk.dump(self.data, tokens_f)
         else:
             if not tokens_path:
                 logging.info('Creating testing data')
-                self.data, self.labels = _create_data_from_iterator( vocab, _csv_iterator(test_csv_path, 
-                                                                                          yield_cls=True,
-                                                                                          ),out_cls=out_cls) 
-                with open(f'tokens_{sufix_name}' , 'wb') as tokens_f:                
+                self.data, self.labels = _create_data_from_iterator(vocab, _csv_iterator(test_csv_path, 
+                                                                                          yield_cls=True), 
+                                                                    out_cls=out_cls) 
+                with open(f'tokens_{sufix_name}', 'wb') as tokens_f:                
                     pk.dump(self.data, tokens_f)            
         
         if data_stats_path != None:
@@ -178,26 +175,19 @@ class TextDataset(Dataset):
         tokens = self.data[index][1]
         tfidf_tokens1 = self.tfidf_rp(tokens)
         if self.sync_aug:
-            ts_tokens = thesaurus_susbtitution(tfidf_tokens1 , 
+            ts_tokens = thesaurus_susbtitution(tfidf_tokens1, 
                                                self.th_sus_prt) 
         else:
-            ts_tokens = thesaurus_susbtitution(tokens , 
-                                               self.th_sus_prt)  
-            
+            ts_tokens = thesaurus_susbtitution(tokens, 
+                                               self.th_sus_prt)              
         tfidf_tokens = self.tfidf_rp(tokens)
         tfidf_rnd_tokens = self.tfidf_rp_rnd(rnd_tokens)
-        ts_tfidf_tokens = thesaurus_susbtitution(tfidf_tokens , 
+        ts_tfidf_tokens = thesaurus_susbtitution(tfidf_tokens, 
                                                  self.th_sus_prt)
-        ts_tfidf_rnd_tokens = thesaurus_susbtitution(tfidf_rnd_tokens , 
+        ts_tfidf_rnd_tokens = thesaurus_susbtitution(tfidf_rnd_tokens, 
                                                      self.rnd_th_sus_prt)
         s1 = ' '.join(ts_tokens)
         s2 = ' '.join(ts_tfidf_tokens)
         rnd_text = ' '.join(ts_tfidf_rnd_tokens)
         return s1, s2, rnd_text, rnd_org_s1, rnd_org_s2, label
-    
-    
-
-
-        
-    
     
