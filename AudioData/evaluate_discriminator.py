@@ -87,10 +87,10 @@ if __name__ == '__main__':
         s_test = s_net(torch.cat((best_match_test.unsqueeze(1), z_test.unsqueeze(1)), dim=1)).sum(-1)
         s_ood = s_net(torch.cat((best_match_ood.unsqueeze(1), z_ood.unsqueeze(1)), dim=1)).sum(-1)
         
-        file = open("auroc.txt","a+")
+        file = open("auroc.txt", "a+")
         l1 = torch.zeros(s_test.size(0))
         l2 = torch.ones(s_ood.size(0))
-        label = torch.cat((l1, l2),dim=0).view(-1,1).cpu()
+        label = torch.cat((l1, l2), dim=0).view(-1, 1).cpu()
         scores = torch.cat((s_test, s_ood), dim=0).cpu()
         FPR, TPR, _ = roc_curve(label, scores, pos_label = 0)
         print('AUC:', auc(FPR, TPR))
