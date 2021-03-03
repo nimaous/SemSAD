@@ -83,9 +83,9 @@ if __name__=='__main__':
     parser.add_argument('--ood_dataset', type=str, default='cifar100',)
     parser.add_argument('--train_dir', type=str, default='.') 
     parser.add_argument('--test_dir', type=str, default='.')     
-    parser.add_argument('--ood_dir', type=str, default='')
-    parser.add_argument('--h_net_path', type=str, default='')
-    parser.add_argument('--s_net_path', type=str, default='' )
+    parser.add_argument('--ood_dir', type=str, default='.')
+    parser.add_argument('--h_net_path', type=str,)
+    parser.add_argument('--s_net_path', type=str,)
 
     args = parser.parse_args()
     args.s_dev = s_dev
