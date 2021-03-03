@@ -74,9 +74,9 @@ if __name__ == '__main__':
     with torch.no_grad():
         z_train, zmean_train = matrix_preparation_train(args, len(training_set), train_loader, h_net)
         z_test, label_test = matrix_preparation(args, len(test_set), test_loader, h_net)
-        print('# male speakers in test_set:', len(torch.unique(label_test)))
+        print('# male speakers in test set:', len(torch.unique(label_test)))
         z_ood, label_ood = matrix_preparation(args, len(ood_set), ood_loader, h_net)
-        print('#female speakers in ood_set:', len(torch.unique(label_ood)))
+        print('#female speakers in ood set:', len(torch.unique(label_ood)))
 
         best_indx_test = best_indices_(z_test, zmean_train)
         best_indx_ood = best_indices_(z_ood, zmean_train)
