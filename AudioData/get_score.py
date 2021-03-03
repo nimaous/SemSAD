@@ -36,7 +36,7 @@ def best_match_(z_test, z_train):
     similar_h = torch.matmul(inp1_normalized.unsqueeze(1), inp2_normalized.unsqueeze(2)).reshape(bs, L)
     best_indx = F.one_hot(similar_h.argmax(dim=1), num_classes = L).float() #[bs, L]
     best_indx = best_indx.unsqueeze(-1) #[bs, L, 1]
-    best_match = (z_train.view(bs, L, C) * best_indx).sum(dim=1)  #[bs, L, 1]  
+    best_match = (z_train.view(bs, L, C) * best_indx).sum(dim=1) #[bs, L, 1]  
     return best_match
      
 def get_features(args, h_net, x):
