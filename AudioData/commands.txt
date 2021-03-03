@@ -23,4 +23,4 @@ notice that:
   2- different hyperparamters than what mentioned in the paper can be passed by arguments 
 
 3- Evaluate the discriminator s
-  python evaluate.py --data_root=<path to train-Librispeech.h5>  --h_net_path=<path to encoder h> --s_net_path=<path to discriminator s>
+  python evaluate_discriminator.py --data_root=<path to train-Librispeech.h5>  --h_net_path=<path to encoder h> --s_net_path=<path to discriminator s>
