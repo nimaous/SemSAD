@@ -10,7 +10,6 @@ import torch.nn as nn
 
 class CNN(nn.Module):
     """
-    
     Input:
         X: (n_samples, n_channel, n_length)
         Y: (n_samples)
@@ -19,8 +18,7 @@ class CNN(nn.Module):
         out: (n_samples)
         
     Pararmetes:
-        n_classes: number of classes
-        
+        n_classes: number of classes  
     """
 
     def __init__(self, in_channels, out_channels, n_len_seg, n_classes, num_layers=1, verbose=False):
@@ -58,7 +56,7 @@ class CNN(nn.Module):
             print(out.shape)
 
         # (n_samples, n_channel, n_length) -> (n_samples, n_length, n_channel)
-        out = out.permute(0,2,1)
+        out = out.permute(0, 2, 1)
         if self.verbose:
             print(out.shape)
         # (n_samples, n_length, n_channel) -> (n_samples*n_seg, n_len_seg, n_channel)
@@ -66,7 +64,7 @@ class CNN(nn.Module):
         if self.verbose:
             print(out.shape)
         # (n_samples*n_seg, n_len_seg, n_channel) -> (n_samples*n_seg, n_channel, n_len_seg)
-        out = out.permute(0,2,1)
+        out = out.permute(0, 2, 1)
         if self.verbose:
             print(out.shape)
         # cnn
