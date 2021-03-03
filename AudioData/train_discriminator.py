@@ -147,7 +147,7 @@ if __name__ == '__main__':
         train(epoch, args, train_loader1, train_loader2, h_net, s_net, s_net_opt)
         torch.save(
             {'model': s_net.module.state_dict(), 'args': args},
-             f'checkpoint/{exp_num}_2.pt')  
+             f'checkpoint/{exp_num}.pt')  
     
     if vis == True:
         writer.close()
