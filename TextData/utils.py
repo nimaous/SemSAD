@@ -25,15 +25,14 @@ import os
 from sklearn.metrics import roc_curve, auc
 from torchvision.utils import make_grid
 
-
 norm = torch.nn.PairwiseDistance(p=2)  
 criterion = torch.nn.CrossEntropyLoss()
 
 def calculate_aucroc(s_1, s_2, fold_path, name): 
-    file = open(fold_path+  f"{name}_auroc.txt","a+")    
+    file = open(fold_path+  f"{name}_auroc.txt", "a+")    
     l1 = torch.zeros(s_1.size(0))
     l2 = torch.ones(s_2.size(0))
-    label = torch.cat((l1, l2),dim=0).view(-1,1).cpu()
+    label = torch.cat((l1, l2), dim=0).view(-1, 1).cpu()
     scores = torch.cat((s_1, s_2), dim=0).cpu()
     FPR, TPR, _ = roc_curve(label, scores, pos_label = 0)
     file.write("AUC :{} \r\n".format(auc(FPR, TPR)))        
@@ -58,10 +57,11 @@ def dist_plot(fold_path,
 def nce(h, h_tild, temprature=0.5):
     bs, h_dim = h.size()      
     label = torch.arange(bs).to(h.device)    
-    h_norm = h/norm(h, torch.zeros_like(h)).view(-1,1) #[bs, h]
-    h_tild_norm = h_tild/norm(h_tild, torch.zeros_like(h)).view(-1,1) #[bs, h]
-    logits = torch.matmul( h_norm.view(-1, h_dim), 
-                         h_tild_norm.view(-1, h_dim).transpose(-1, -2))/temprature 
+    h_norm = h/norm(h, torch.zeros_like(h)).view(-1, 1) #[bs, h]
+    h_tild_norm = h_tild/norm(h_tild, 
+                              torch.zeros_like(h)).view(-1, 1) #[bs, h]
+    logits = torch.matmul(h_norm.view(-1, h_dim), 
+                          h_tild_norm.view(-1, h_dim).transpose(-1, -2))/temprature 
     loss = criterion(logits, label)
     with torch.no_grad():
         accuracy = torch.eq(
