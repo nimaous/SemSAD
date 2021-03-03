@@ -59,17 +59,12 @@ class Encoder(nn.Module):
         t_1 = torch.randint(int(self.seq_len/160-tau), (1,)).long() 
         t_2 = t_1 + tau
         z = self.encoder(x) #[bs, 256, 128]
-        z = z.transpose(1,2) #[bs, 128, 256]         
-        z_t1 = z[:, t_1,:].squeeze() 
-        z_t1_normalized = (z_t1/self.norm(z_t1, torch.zeros_like(z_t1)).view(-1,1))
-        z_t2 = z[:, t_2,:].squeeze() 
-        z_t2_normalized = (z_t2/self.norm(z_t2, torch.zeros_like(z_t2)).view(-1,1))
-        total = torch.mm(z_t1_normalized, torch.transpose(z_t2_normalized,0,1)) 
+        z = z.transpose(1, 2) #[bs, 128, 256]         
+        z_t1 = z[:, t_1, :].squeeze() 
+        z_t1_normalized = (z_t1/self.norm(z_t1, torch.zeros_like(z_t1)).view(-1, 1))
+        z_t2 = z[:, t_2, :].squeeze() 
+        z_t2_normalized = (z_t2/self.norm(z_t2, torch.zeros_like(z_t2)).view(-1, 1))
+        total = torch.mm(z_t1_normalized, torch.transpose(z_t2_normalized, 0, 1)) 
         nce = self.lsoftmax(total).diag().sum() 
         nce /= -1.*bs
         return nce
-
-  
-    
-    
-
