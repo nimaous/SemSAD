@@ -7,20 +7,20 @@ PyTorch implementation of [Unsupervised Anomaly Detection From Semantic Similari
 
 
 <p align="center">
-<img src="figures/Tabel1.png" width="400px">
+<img src="figures/Table1.png" width="400px">
 <img src="figures/Figure5.png" width="400px">
 </p>
 
 <p align="center">
-<img src="figures/Tabel2.png" width="400px"></img>
+<img src="figures/Table2.png" width="400px"></img>
 <p/>
 
 <p align="center">
-<img src="figures/Tabel4.png" width="400px"></img>
+<img src="figures/Table4.png" width="400px"></img>
 <p/>
 
 <p align="center">
-<img src="figures/Tabel6.png" width="400px"></img>
+<img src="figures/Table6.png" width="400px"></img>
 <p/>
 
 
