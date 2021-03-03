@@ -39,16 +39,16 @@ notice that:
     (* requires about 2 GPUs)
     
 
-  3.1 cifar10 vs svhn:  python roc.py --dataset=cifar10 --ood_dataset=svhn  --h_net_path=<path to encoder h trained on cifar10> --s_net_path=<path to discriminator s trained on cifar10 >
+  3.1 cifar10 vs svhn:  python evaluate_discriminator.py --dataset=cifar10 --ood_dataset=svhn  --h_net_path=<path to encoder h trained on cifar10> --s_net_path=<path to discriminator s trained on cifar10 >
   
-  3.2 cifar100 vs svhn:  python roc.py --dataset=cifar100 --ood_dataset=svhn  --h_net_path=<path to encoder h trained on cifar100> --s_net_path=<path to discriminator s trained on cifar100 >
+  3.2 cifar100 vs svhn:  python evaluate_discriminator.py --dataset=cifar100 --ood_dataset=svhn  --h_net_path=<path to encoder h trained on cifar100> --s_net_path=<path to discriminator s trained on cifar100 >
   
-  3.3 cifar10 vs cifar100:  python roc.py --dataset=cifar10 --ood_dataset=cifar100  --h_net_path=<path to encoder h trained on cifar10> --s_net_path=<path to discriminator s trained on cifar10 >
+  3.3 cifar10 vs cifar100:  python evaluate_discriminator.py --dataset=cifar10 --ood_dataset=cifar100  --h_net_path=<path to encoder h trained on cifar10> --s_net_path=<path to discriminator s trained on cifar10 >
   
-  3.4 cifar100 vs cifar10:  python roc.py --dataset=cifar100 --ood_dataset=cifar10  --h_net_path=<path to encoder h trained on cifar100> --s_net_path=<path to discriminator s trained on cifar100 >  
+  3.4 cifar100 vs cifar10:  python evaluate_discriminator.py --dataset=cifar100 --ood_dataset=cifar10  --h_net_path=<path to encoder h trained on cifar100> --s_net_path=<path to discriminator s trained on cifar100 >  
   
-  3.5 cifar100 vs tiny_iamgenet:  python roc.py --dataset=cifar100 --ood_dataset=tiny_imagenet --ood_dir=tiny-imagenet-200/test/  --h_net_path=<path to encoder h trained on cifar100> --s_net_path=<path to discriminator s trained on cifar100 > 
+  3.5 cifar100 vs tiny_iamgenet:  python evaluate_discriminator.py --dataset=cifar100 --ood_dataset=tiny_imagenet --ood_dir=tiny-imagenet-200/test/  --h_net_path=<path to encoder h trained on cifar100> --s_net_path=<path to discriminator s trained on cifar100 > 
   
-  3.6 cifar10 vs tiny_iamgenet:  python roc.py --dataset=cifar10 --ood_dataset=tiny_imagenet --ood_dir=tiny-imagenet-200/test/  --h_net_path=<path to encoder h trained on cifar10> --s_net_path=<path to discriminator s trained on cifar10> 
+  3.6 cifar10 vs tiny_iamgenet:  python evaluate_discriminator.py --dataset=cifar10 --ood_dataset=tiny_imagenet --ood_dir=tiny-imagenet-200/test/  --h_net_path=<path to encoder h trained on cifar10> --s_net_path=<path to discriminator s trained on cifar10> 
   
-  3.7 tiny_iamgenet vs tiny_iamgenet:  python roc.py --dataset=tiny_iamgenet --ood_dataset=tiny_imagenet --ood_size=9000 --test_size=1000 --ood_dir=tiny-imagenet-200/ood/ --train_dir=tiny-imagenet-200/train/ --test_dir=tiny-imagenet-200/validation/ --h_net_path=<path to encoder h > --s_net_path=<path to discriminator s>   
+  3.7 tiny_iamgenet vs tiny_iamgenet:  python evaluate_discriminator.py --dataset=tiny_iamgenet --ood_dataset=tiny_imagenet --ood_size=9000 --test_size=1000 --ood_dir=tiny-imagenet-200/ood/ --train_dir=tiny-imagenet-200/train/ --test_dir=tiny-imagenet-200/validation/ --h_net_path=<path to encoder h > --s_net_path=<path to discriminator s>   
