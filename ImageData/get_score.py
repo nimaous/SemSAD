@@ -105,9 +105,9 @@ class Get_Score(object):
     def find_best_match(self,): 
         h, x, x_n, self.x_t1, self.x_t2 = self.matrix_preparation(self.max_size1, 
                                                                   self.loader)
-        print(" training sample size", h.size())
+        print("training sample size", h.size())
         h_d, x_d = h[self.max_size2:], x[self.max_size2:]
-        print(" shrunk sample size", h_d.size())
+        print("shrunk sample size", h_d.size())
         self.h_ind_train, self.x_ind_train = h[0:self.max_size2], x[0:self.max_size2] 
         self.h_ind, self.x_ind, _, _, _ = self.matrix_preparation(self.max_size2,
                                                                   self.ind_loader)
